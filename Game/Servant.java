@@ -1,8 +1,9 @@
 package Game;
 
-public class Servant extends HeroBase{
+public class Servant extends ServiceMan{
     public Servant(String nameHero, int x, int y) {
-        super(50, 50, 1, nameHero, new int[] {-35, -30}, x, y);
+
+        super(50, 50, 1, nameHero, new int[] {-30, -20}, x, y, 0, 1, 1, 10);
     }
 
     @Override

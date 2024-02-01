@@ -1,24 +1,36 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /*
 * Базовый класс героев
 * */
-public class HeroBase {
+public class HeroBase implements Games {
     protected int health, maxHealth, armor;
     protected  String nameHero ;
-    protected  int[] damage;
+    protected  int[] varDamage;
     protected Vector2 position;
+    protected int initiative;
+    public ArrayList<HeroBase> whiteCommand;
+    public ArrayList<HeroBase> blackCommand;
+    protected ArrayList<HeroBase> target;
+    protected int life;
+    protected int status;
+    public int getInitiative() {return initiative;}
+    int damage;
 
-    public HeroBase(int health, int maxHealth, int armor, String nameHero, int[] damage, int x, int y) {
+
+    public HeroBase(int health, int maxHealth, int armor, String nameHero, int[] varDamage, int x, int y,
+                    int initiative, int life, int status) {
         this.health = health;
         this.maxHealth = maxHealth;
         this.armor = armor;
         this.nameHero = nameHero;
-        this.damage = damage;
+        this.varDamage = varDamage;
         this.position = new Vector2(x, y);
+        this.initiative = initiative;
+        this.life = life;//1 - жив, 0 - труп
+        this.status = status;//1 - в игре, 0 - пропуск хода
     }
 
     protected double distance(HeroBase target) {
@@ -31,18 +43,23 @@ public class HeroBase {
             if(distance((HeroBase) list.get(i)) < distance((HeroBase) list.get(count))) {
                 count = i;
             }
+
         }
         return (HeroBase) list.get(count);
     }
 
+
+
     @Override
     public String toString() {
-        return " {name: " + nameHero +
-                ", health = " + health +
+        return  " " + nameHero +
+                ": health = " + health +
                 ", maxHealth = " + maxHealth +
                 ", armor = " + armor +
-                ", position =" + position +
-                '}';
+                ", position =" + position;
     }
+
+    @Override
+    public void step(ArrayList<HeroBase> list1, ArrayList<HeroBase> list2) {}
 }
 

@@ -3,6 +3,7 @@ package Game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Main {
@@ -11,6 +12,8 @@ public class Main {
     static ArrayList<Integer> posBlack = new ArrayList<>();
     static ArrayList<HeroBase> whiteCommand = new ArrayList<>();
     static ArrayList<HeroBase> blackCommand = new ArrayList<>();
+    static ArrayList<HeroBase> players = new ArrayList<>();
+
     static int n = 5;
 
 
@@ -24,13 +27,32 @@ public class Main {
         System.out.println("*****************************************");
         blackCommand.forEach(n -> System.out.println(n.toString()));
         System.out.println("*****************************************");
-        HeroBase near = whiteCommand.get(1).near(blackCommand);
-        double dist = whiteCommand.get(1).distance(near);
-        System.out.println(dist);
-        System.out.println(near);
-        for (int i = 0; i < blackCommand.size(); i++) {
-            System.out.println(whiteCommand.get(1).distance(blackCommand.get(i)));
+        players.addAll(whiteCommand);
+        players.addAll(blackCommand);
+        players.sort((o1, o2)-> o2.getInitiative() - o1.getInitiative());
+
+        Scanner input = new Scanner(System.in);
+
+        while (true){
+            input.nextLine();
+            for (int i = 0; i < players.size() - 1; i++) {
+                HeroBase hero = players.get(i);
+                if (hero.health <=0){
+                    players.remove(i);
+                }
+                if(whiteCommand.contains(hero)){
+                    hero.step(whiteCommand, blackCommand);
+
+                }
+                else {
+                    hero.step(blackCommand, whiteCommand);
+
+                }
+            }
+            System.out.println("*****************************************");
+            players.forEach(n -> System.out.println(n.toString()));
         }
+
     }
 
     static void createCommand(int k) {
